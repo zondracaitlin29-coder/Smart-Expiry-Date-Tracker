@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track product expiry dates efficiently">
+    <meta name="theme-color" content="#001F3F">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Expiry Tracker">
+    
+    <!-- Link to the PWA manifest and external CSS -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 id="headerTitle" style="position: relative; display: inline-block; width: 100%; text-align: center;"></h1>
+        <div class="header-stats">
+            <div class="stat-item">
+                <span class="stat-label">Expiring Soon</span>
+                <span id="expiringCount" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Items</span>
+                <span id="totalCount" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Processed</span>
+                <span id="processedCount" class="stat-value">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search -->
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="search-bar" 
+            placeholder="Search products..."
+            autocomplete="off"
+        >
+    </div>
+
+    <!-- Tabs -->
+    <div class="nav-tabs">
+        <button id="expiringTab" class="tab-btn">Expiring Soon</button>
+        <button id="allTab" class="tab-btn inactive">All Products</button>
+        <button id="processedTab" class="tab-btn inactive">Processed Items</button>
+    </div>
+
+    <!-- Product List -->
+    <ul id="productList" class="product-list"></ul>
+
+    <!-- Processed Items List -->
+    <div id="processedList" style="padding: 1rem;"></div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📦</div>
+        <p id="emptyMessage">No products to display</p>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Add New Product</div>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" placeholder="e.g., Tomato Sauce" required>
+                </div>
+                <div class="form-group">
+                    <label for="productQuantity">Quantity *</label>
+                    <input type="text" id="productQuantity" placeholder="e.g., 500ml" required>
+                </div>
+                <div class="form-group">
+                    <label>Expiry Dates *</label>
+                    <div id="datesList" class="date-list"></div>
+                    <button type="button" class="add-date-btn" id="addDateBtn">+ Add Date</button>
+                    <input type="date" id="expiryDate" style="display: none;" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Edit Product</div>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editProductName">Product Name *</label>
+                    <input type="text" id="editProductName" placeholder="e.g., Tomato Sauce">
+                </div>
+                <div class="form-group">
+                    <label for="editProductQuantity">Quantity *</label>
+                    <input type="text" id="editProductQuantity" placeholder="e.g., 500ml">
+                </div>
+                <div class="form-group">
+                    <label>Expiry Dates *</label>
+                    <div id="editDatesList" class="date-list"></div>
+                    <button type="button" class="add-date-btn" id="editAddDateBtn">+ Add Date</button>
+                    <input type="date" id="editExpiryDate" style="display: none;">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" id="editCancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Product Button -->
+    <button id="addBtn" class="add-btn" aria-label="Add new product">+</button>
+
+    <!-- Application & Service Worker Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
